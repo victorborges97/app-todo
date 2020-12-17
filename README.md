@@ -1,4 +1,4 @@
-# SQLite Example
+# App Todo com SQLite Expo.
 
 <p>
   <!-- iOS -->
@@ -7,18 +7,18 @@
   <img alt="Supports Expo Android" longdesc="Supports Expo Android" src="https://img.shields.io/badge/Android-4630EB.svg?style=flat-square&logo=ANDROID&labelColor=A4C639&logoColor=fff" />
 </p>
 
-Example demonstrating use of the `SQLite` API in Expo.
+Exemplo de demonstração do uso da API `SQLite` na Expo. 
 
-The app allows adding todo items, marking them as done, and deleting done items.
-`SQLite` features used include creating and opening databases, creating tables,
-inserting items, querying and displaying results, using prepared statements.
+O aplicativo permite adicionar itens de tarefas, marcá-los como concluídos e excluir itens concluídos. 
+Os recursos `SQLite` usados ​​incluem a criação e abertura de bancos de dados, criação de tabelas, 
+inserir itens, consultar e exibir resultados, usando instruções preparadas.
 
 ![Simulator Example](https://i.imgur.com/CDrXKzV.png)
 
 ## 🚀 How to use
 
 - Run `yarn` or `npm install`
-- Run [`expo start`](https://docs.expo.io/versions/latest/workflow/expo-cli/), try it out.
+- Run [`expo start`](https://docs.expo.io/versions/latest/workflow/expo-cli/), Experimente.
 
 ## 📝 Notes
 

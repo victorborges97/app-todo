@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Constants from 'expo-constants';
+import { StatusBar } from "expo-status-bar"
+import { FontAwesome } from "@expo/vector-icons"
 import * as SQLite from 'expo-sqlite';
 import * as Updates from 'expo-updates';
 
 const db = SQLite.openDatabase("db.db");
 
 function Items({ done: doneHeading, onPressItem }) {
+
   const [items, setItems] = React.useState(null);
 
   React.useEffect(() => {
@@ -33,15 +36,17 @@ function Items({ done: doneHeading, onPressItem }) {
           key={id}
           onPress={() => onPressItem && onPressItem(id)}
           style={{
-            backgroundColor: done ? "#9871F5" : "#fff",
-            borderColor: "#6A6180",
-            borderWidth: 0.5,
+            backgroundColor: done ? "#c9c9c9" : "#fff",
+            borderColor: "#F7F7F7",
+            borderWidth: done ? 0 : 1,
             padding: 8,
-            borderRadius: 8,
+            borderRadius: 10,
             marginBottom: 5,
+            height: 53,
+            justifyContent: "center"
           }}
         >
-          <Text style={{ color: done ? "#fff" : "#232323" }}>{value}</Text>
+          <Text style={{ color: "#1a1a1a" }}>{value}</Text>
         </TouchableOpacity>
       ))}
     </View>
@@ -91,19 +96,9 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.heading}>To do</Text>
-      <View style={styles.flexRow}>
-        <TextInput
-          onChangeText={text => setText(text)}
-          onSubmitEditing={() => {
-            add(text);
-            setText(null);
-          }}
-          placeholder="O que você precisa fazer?"
-          style={styles.input}
-          value={text}
-        />
-      </View>
+
+      <StatusBar backgroundColor="#E8EAED" style="auto" />
+      
       <ScrollView style={styles.listArea}>
         <Items
           key={`forceupdate-todo-${forceUpdateId}`}
@@ -134,6 +129,29 @@ export default function App() {
           }
         />
       </ScrollView>
+
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.flexRow}>
+        <TextInput
+          onChangeText={text => setText(text)}
+          onSubmitEditing={() => {
+            add(text);
+            setText(null);
+          }}
+          placeholder="O que você precisa fazer?"
+          style={styles.input}
+          value={text}
+        />
+        <TouchableOpacity 
+          onPress={() => {
+            add(text);
+            setText(null);
+          }}
+          style={[styles.input, styles.botao_input]} >
+          <FontAwesome name="plus" color="#C0C0C0" size={18} />
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </View>
   );
 
@@ -156,21 +174,44 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#6A6180",
     marginTop: 10,
+    marginBottom: 10,
   },
   flexRow: {
-    flexDirection: "row"
+    flexDirection: "row",
+    width: "100%",
+    paddingHorizontal: 15,
+    justifyContent: "space-evenly",
+    position: "absolute",
+    bottom: 20,
   },
   input: {
-    borderColor: "#9871F5",
-    borderRadius: 8,
     borderWidth: 1,
-    flex: 1,
-    height: 48,
-    margin: 16,
-    padding: 8
+    borderColor: '#ddd',
+    borderBottomWidth: 0,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.15,
+    shadowRadius: 2,
+    elevation: 1,
+
+    backgroundColor: "#FFFFFF",
+    borderRadius: 25,
+    height: 50,
+    width: "80%",
+    paddingHorizontal: 10,
+  },
+  botao_input: {
+    justifyContent: "center",
+    paddingHorizontal: 0,
+    width: 50,
+    alignItems: "center"
+  },
+  texto_botao_input: {
+    fontSize: 24,
+    color: "#C0C0C0"
   },
   listArea: {
-    backgroundColor: "#F0F0F7",
+    backgroundColor: "#E8EAED",
     flex: 1,
     paddingTop: 16
   },
@@ -180,7 +221,8 @@ const styles = StyleSheet.create({
   },
   sectionHeading: {
     fontSize: 18,
+    fontWeight: "bold",
     marginBottom: 8,
-    color: "#6A6180",
+    color: "#1a1a1a",
   }
 });
